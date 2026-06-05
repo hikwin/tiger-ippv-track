@@ -9,6 +9,10 @@
 # Ignore installation lock file
 /install.lock
 
+# Ignore local execution scripts
+/run.bat
+/stop.bat
+
 # Ignore dynamically generated tracking scripts
 /tracking_*.php
 
