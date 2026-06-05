@@ -37,35 +37,22 @@
 - PDO SQLite 扩展
 - 支持文件写入权限
 
-### 推荐环境
-- **PHP路径**: `D:\phpstudy_pro\Extensions\php\php7.3.4nts\php.exe` (PHPStudy Pro)
-- **PHP版本**: 7.3.4 NTS
-- **操作系统**: Windows 10/11
-
 ## 快速开始
 
-### 1. 下载系统
-将系统文件上传到您的Web服务器目录。
+### 1. 上传程序
+将项目源码上传到您的 PHP 服务器目录（如 Nginx、Apache 或 IIS 的网站根目录）。
 
-### 2. 启动系统
-双击运行 `run.bat` 文件，系统将自动：
-- 检查PHP环境（使用配置的PHP路径）
-- 创建必要目录
-- 启动内置Web服务器
+### 2. 安装配置
+在浏览器中访问您的站点域名，系统将自动跳转到安装向导：
 
-**注意**: 如果使用PHPStudy Pro环境，启动脚本已配置为使用 `D:\phpstudy_pro\Extensions\php\php7.3.4nts\php.exe`
+1. **环境检测** - 自动检测服务器环境是否满足要求（PHP 7.0+, PDO SQLite 扩展等）
+2. **系统配置** - 在同一个页面中完成所有配置（数据库存储目录、管理员账号、系统基础设置）
+3. **安装完成** - 自动生成配置文件，完成安装并直接进入管理后台
 
-### 3. 安装配置
-在浏览器中访问 `http://localhost:8000`，系统将自动跳转到安装向导：
-
-1. **环境检测** - 检查服务器环境是否满足要求
-2. **系统配置** - 在一个页面中完成所有配置（数据库、管理员、系统设置）
-3. **安装完成** - 完成安装并进入管理后台
-
-### 4. 使用系统
+### 3. 使用系统
 
 #### 管理后台
-访问 `http://localhost:8000/index.php?action=admin` 进入管理后台：
+访问 `http://your-domain.com/index.php?action=admin` 进入管理后台：
 - 查看访问统计数据
 - 管理统计项目
 - 生成统计代码
@@ -74,7 +61,7 @@
 #### 创建统计项目
 1. 在管理后台点击"创建新项目"
 2. 填写项目名称和描述
-3. 系统自动生成唯一的跟踪代码
+3. 系统自动生成唯一的项目跟踪代码与专属的统计文件
 
 #### 生成统计代码
 支持两种统计方式：
@@ -105,24 +92,22 @@
 ## 目录结构
 
 ```
-ippvs/
+TigerIPPVTrack/
 ├── index.php              # 主入口文件
 ├── install.php            # 安装向导
 ├── dashboard.php          # 公开仪表板
-├── run.bat               # 启动脚本
-├── stop.bat              # 停止脚本
 ├── README.md             # 说明文档
 ├── config/               # 配置文件目录
-│   └── config.php        # 系统配置
+│   └── .gitkeep          # 占位文件
 ├── data/                 # 数据目录
-│   ├── statistics.db     # SQLite数据库
-│   └── logs/             # 日志文件
+│   └── .gitkeep          # 占位文件
 ├── includes/             # 核心类库
 │   ├── functions.php     # 通用函数
 │   └── Database.php      # 数据库操作类
 ├── api/                  # API接口
 │   ├── track.php         # JavaScript统计接口
 │   ├── image.php         # 图片统计接口
+│   ├── track_fast.php    # 快速统计接口
 │   └── generate.php      # 代码生成接口
 └── admin/                # 管理后台
     ├── index.php         # 管理首页
@@ -137,7 +122,7 @@ ippvs/
 系统使用SQLite数据库，配置文件位于 `config/config.php`：
 
 ```php
-define('DB_PATH', 'data/stats_abc123def456.db');
+define('DB_PATH', 'data/stats_xxxxxxxxxxxxxxxx.db');
 ```
 
 **安全特性**：
@@ -154,60 +139,6 @@ define('DB_PATH', 'data/stats_abc123def456.db');
 - `track_bots` - 是否统计爬虫
 - `track_duplicates` - 是否允许重复统计
 
-## 数据表结构
-
-### visits 表 - 访问记录
-- `id` - 主键
-- `ip_address` - IP地址
-- `user_agent` - 用户代理
-- `referer` - 来源页面
-- `source_type` - 来源类型
-- `page_url` - 页面URL
-- `page_title` - 页面标题
-- `is_bot` - 是否为爬虫
-- `bot_type` - 爬虫类型（如：Google Bot、ChatGPT Bot等）
-- `visit_time` - 访问时间
-- `session_id` - 会话ID
-- `country` - 国家
-- `city` - 城市
-- `province` - 省份/州
-- `device_type` - 设备类型
-- `browser` - 浏览器
-- `os` - 操作系统
-
-### pages 表 - 页面统计
-- `id` - 主键
-- `page_url` - 页面URL
-- `page_title` - 页面标题
-- `total_views` - 总访问量
-- `unique_views` - 独立访问量
-- `created_at` - 创建时间
-- `updated_at` - 更新时间
-
-### projects 表 - 统计项目
-- `id` - 主键
-- `name` - 项目名称
-- `description` - 项目描述
-- `tracking_code` - 跟踪代码
-- `is_active` - 是否激活
-- `created_at` - 创建时间
-- `updated_at` - 更新时间
-
-### admins 表 - 管理员
-- `id` - 主键
-- `username` - 用户名
-- `password` - 密码（加密）
-- `email` - 邮箱
-- `created_at` - 创建时间
-- `last_login` - 最后登录时间
-- `is_active` - 是否激活
-
-### settings 表 - 系统设置
-- `id` - 主键
-- `setting_key` - 设置键
-- `setting_value` - 设置值
-- `description` - 描述
-- `updated_at` - 更新时间
 
 ## 安全说明
 
@@ -223,7 +154,7 @@ define('DB_PATH', 'data/stats_abc123def456.db');
 A: 删除 `install.lock` 文件，然后重新访问系统即可进入安装向导。
 
 ### Q: 如何备份数据？
-A: 直接备份 `data/statistics.db` 文件即可，这是完整的数据库文件。
+A: 直接备份 `data/` 目录下的以 `stats_` 开头、以 `.db` 结尾的数据库文件即可（格式为 `stats_xxxxxxxxxxxxxxxx.db`，文件名中的 16 位字符为安装时系统随机生成）。
 
 ### Q: 如何修改管理员密码？
 A: 在数据库中更新 `admins` 表的 `password` 字段，使用 `password_hash()` 函数加密新密码。
@@ -242,9 +173,8 @@ A: 在管理后台的"统计项目"页面可以创建、编辑和删除统计项
 
 如果您在使用过程中遇到问题，可以：
 
-1. 查看系统日志文件（`data/logs/` 目录）
-2. 检查PHP错误日志
-3. 确认服务器环境是否满足要求
+1. 检查服务器的 PHP 错误日志（或 Web 服务器的 error.log）
+2. 确认服务器环境是否满足要求
 
 ## 版本信息
 
@@ -252,15 +182,6 @@ A: 在管理后台的"统计项目"页面可以创建、编辑和删除统计项
 - 开发语言：PHP
 - 数据库：SQLite
 - 许可证：MIT
-
-## 更新日志
-
-### v1.0.0 (2024-01-01)
-- 初始版本发布
-- 支持基本的网站流量统计功能
-- 提供安装向导和管理后台
-- 支持JavaScript和图片两种统计方式
-- 实现数据可视化展示
 
 ---
 
