@@ -1,0 +1,22 @@
+# Ignore all files in config/ directory except .gitkeep
+/config/*
+!/config/.gitkeep
+
+# Ignore all files in data/ directory except .gitkeep
+/data/*
+!/data/.gitkeep
+
+# Ignore installation lock file
+/install.lock
+
+# Ignore dynamically generated tracking scripts
+/tracking_*.php
+
+# Ignore logs
+*.log
+
+# Ignore IDE & OS system files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
