@@ -2,6 +2,9 @@
 
 一个基于PHP开发的轻量级网站访问统计分析系统，支持实时统计、来源分析、设备识别等功能。
 
+![Dashboard 仪表盘](https://i.ibb.co/4nKVkxbg/Pix-Pin-2026-06-05-20-19-36.png)
+![Data Analysis 数据分析](https://i.ibb.co/tw4cgF6P/002.png)
+
 ## 功能特色
 
 ### 核心统计功能
